@@ -8,12 +8,12 @@ import lombok.*;
 
 @Entity
 @Getter @Setter
-@View(members = "numAsiento, costoBoleto; " +
+@View(members = "numeroAsiento, costoBoleto; " +
                                  "persona")
 public class Pasajero extends Identificable{
 	
 	@Column(length = 8)
-	int numAsiento;
+	int numeroAsiento;
 	
 	@Column(length = 10)
 	float costoBoleto;
