@@ -1,6 +1,6 @@
 package com.tuempresa.aeropuerto2.modelo;
 
-import java.sql.*;
+import java.time.*;
 
 import javax.persistence.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 
 @Entity
 @Getter @Setter
-@View(members = "anyo, hora; " +
+@View(members = "anyo, fecha, hora; " +
                 "ciudadOrigen, ciudadDestino; " +
 		        "tripulacion, pasajero")
 public class Vuelo extends Identificable{
@@ -22,8 +22,17 @@ public class Vuelo extends Identificable{
 	int anyo;
 	
 	@Required
-	@Column(length = 5)
-	Time hora;
+	@DefaultValueCalculator(CurrentLocalDateCalculator.class)
+	LocalDate fecha;
+	
+	@StringTime
+	@Column(length=33)
+	@DefaultValueCalculator(CurrentTimestampCalculator.class)
+	private String hora;
+	
+	//@Required
+	//@Column(length = 5)
+	//Time hora;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@DescriptionsList(descriptionProperties = "origen")

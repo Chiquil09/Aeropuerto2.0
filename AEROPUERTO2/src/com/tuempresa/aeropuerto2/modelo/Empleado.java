@@ -27,4 +27,5 @@ public class Empleado extends Identificable {
 	Direccion direccion;
 	
 
+
 }

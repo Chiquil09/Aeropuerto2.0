@@ -1,0 +1,52 @@
+/*C4*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C5*/SET SCHEMA AEROPUERTO2
+INSERT INTO LISTAPAISES VALUES('4028c4f1844061950184406258660000','Canada')
+COMMIT
+INSERT INTO AEROLINEA VALUES('4028c4f184406195018440625f7c0001','AeroMexico','4028c4f1844061950184406258660000')
+COMMIT
+INSERT INTO DIRECCION VALUES('55 entre 56','Rojo Gomez','Quintana Roo','Felipe Carrillo Puerto','Mexico')
+COMMIT
+INSERT INTO EMPLEADO VALUES('4028c4f184406195018440642be50002','Chikil Camarena','40631A4AC0A844710000000011AF49CD','Adrian Jonas','55 entre 56',NULL)
+COMMIT
+INSERT INTO EMPLEADO VALUES('4028c4f1844061950184406540e90003','Argenis Canton','406515E7C0A84471000000001FB2C5E6','Manuel Zuriel','55 entre 56',NULL)
+COMMIT
+INSERT INTO TRIPULACION VALUES('4028c4f18440619501844065d2a10004','TRIP1',NULL,'4028c4f184406195018440625f7c0001',NULL,NULL,NULL,2)
+INSERT INTO TRIPULACION_DETALLES VALUES('4028c4f18440619501844065d2a10004',NULL)
+INSERT INTO TRIPULACION_DETALLES VALUES('4028c4f18440619501844065d2a10004',NULL)
+COMMIT
+INSERT INTO TRIPULACION_DETALLES VALUES('4028c4f18440619501844065d2a10004',NULL)
+INSERT INTO TRIPULACION_DETALLES VALUES('4028c4f18440619501844065d2a10004',NULL)
+COMMIT
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+CREATE SCHEMA FACTURACION AUTHORIZATION SA
+create table facturacion.Autor (oid varchar(32) not null, nombre varchar(50), primary key (oid))
+create table facturacion.Categoria (oid varchar(32) not null, descripcion varchar(50), primary key (oid))
+create table facturacion.Cliente (numero integer not null, codigoPostal integer, municipio varchar(20), provincia varchar(30), viaPublica varchar(30), nombre varchar(50), primary key (numero))
+create table facturacion.DocumentoComercial (DTYPE varchar(31) not null, oid varchar(32) not null, anyo integer, fecha date, importeTotal numeric(19,2), iva numeric(19,2), numero integer, observaciones varchar(255), porcentajeIVA numeric(2,0), diasEntrega INTEGER DEFAULT 1, entregado BOOLEAN DEFAULT FALSE, cliente_numero integer not null, factura_oid varchar(32), primary key (oid))
+create table facturacion.DocumentoComercial_detalles (DocumentoComercial_oid varchar(32) not null, cantidad integer not null, precioPorUnidad numeric(19,2), producto_numero integer)
+create table facturacion.IMAGES (ID varchar(255) not null, GALLERY varchar(255), IMAGE varbinary(16777216), primary key (ID))
+create table facturacion.OXDISCUSSIONCOMMENTS (id varchar(32) not null, comment clob(16777216), discussionId varchar(32), time timestamp, userName varchar(30), primary key (id))
+create table facturacion.Producto (numero integer not null, descripcion varchar(50), fotos varchar(32), isbn varchar(13), observaciones varchar(255), precio numeric(19,2), autor_oid varchar(32), categoria_oid varchar(32), primary key (numero))
+create table facturacion.TuPrimeraEntidad (id varchar(32) not null, descripcion varchar(50), fecha date, importe numeric(19,2), primary key (id))
+create index facturacion.IDXbhlx4vunn24ym1tbrlgq8g30m on facturacion.OXDISCUSSIONCOMMENTS (discussionId)
+alter table facturacion.DocumentoComercial add constraint FKqxvhhtdl5x1bljcimyej4mksx foreign key (cliente_numero) references facturacion.Cliente
+alter table facturacion.DocumentoComercial add constraint FK4lhtu14i3f0y8m4ohuxww2b48 foreign key (factura_oid) references facturacion.DocumentoComercial
+alter table facturacion.DocumentoComercial_detalles add constraint FKgyn78bk9nimdbk5uxm7ioiib1 foreign key (producto_numero) references facturacion.Producto
+alter table facturacion.DocumentoComercial_detalles add constraint FKq37xaecvr7po697tmegcffoba foreign key (DocumentoComercial_oid) references facturacion.DocumentoComercial
+alter table facturacion.Producto add constraint FKmtkejrnklbkimttu99b9jqufw foreign key (autor_oid) references facturacion.Autor
+alter table facturacion.Producto add constraint FKc81rcy0vfdn5ewnap5scabhd3 foreign key (categoria_oid) references facturacion.Categoria
+SET SCHEMA FACTURACION
+INSERT INTO CLIENTE VALUES(1,3,'sc','s','ssmsffse','ssfsfsf')
+COMMIT
+INSERT INTO CATEGORIA VALUES('4028c4f1844067d901844068f4310000','SOFTWRE')
+COMMIT
+INSERT INTO AUTOR VALUES('4028c4f1844067d90184406946900001','CHIKIL')
+COMMIT
+INSERT INTO PRODUCTO VALUES(2323,'css','40691989C0A8447100000000564E484E','','',2.00,'4028c4f1844067d90184406946900001','4028c4f1844067d901844068f4310000')
+COMMIT
+INSERT INTO DOCUMENTOCOMERCIAL VALUES('Factura','4028c4f1844067d9018440698e680002',2022,'2022-11-03',0.00,0.00,1,'',21,1,FALSE,1,NULL)
+INSERT INTO DOCUMENTOCOMERCIAL_DETALLES VALUES('4028c4f1844067d9018440698e680002',0,2.00,2323)
+COMMIT
