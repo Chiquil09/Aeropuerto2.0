@@ -23,5 +23,5 @@ public class Direccion {
 	
 	@Column(length = 32)
 	String pais;
-	
+	 
 }

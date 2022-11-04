@@ -8,7 +8,7 @@ import lombok.*;
 
 @Entity
 @Getter @Setter
-@View(members = "nombres, apellidos; " +
+@View(name = "refe" , members = "nombres, apellidos; " +
                               "fotografia;" +
 		                      "direccion")
 public class Persona extends Identificable {
